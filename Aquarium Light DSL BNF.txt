@@ -1,0 +1,30 @@
+<program> ::= <statement> <program_tail>
+<program_tail> ::= <statement> <program_tail> | epsilon
+<statement> ::= <event_handler> | <emit_call> | <assignment> | <if_statement> | <for_loop> | <read_operation> | <show_operation> | <lamp_command>
+<event_handler> ::= "when" <identifier> "as" <identifier> ":" <block> "end"
+<emit_call> ::= "emit" <identifier> <expression>
+<assignment> ::= <variable> "=" <expression>
+<if_statement> ::= "if" <expression> ":" <block> "end"
+<for_loop> ::= "for" <identifier> "in" <identifier> ":" <block> "end"
+<read_operation> ::= "read" <variable>
+<show_operation> ::= "show" <expression>
+<lamp_command> ::= "lamp" <lamp_property> <expression>
+<lamp_property> ::= "brightness" | "color"
+<block> ::= <statement> <block_tail>
+<block_tail> ::= <statement> <block_tail> | epsilon
+<expression> ::= <boolean_expr> | <arithmetic_expr> | <list> | <variable> | <number>
+<boolean_expr> ::= <expression> <boolean_op> <expression>
+<boolean_op> ::= "and" | "or" | "==" | "!=" | "<" | ">" | "<=" | ">="
+<arithmetic_expr> ::= <expression> <arith_op> <expression>
+<arith_op> ::= "+" | "-" | "*" | "/"
+<list> ::= "[" <argument_list> "]"
+<argument_list> ::= <expression> <argument_list_tail> | epsilon
+<argument_list_tail> ::= "," <expression> <argument_list_tail> | epsilon
+<variable> ::= <identifier> | <identifier> "[" <expression> "]"
+<identifier> ::= <letter> <identifier_tail>
+<identifier_tail> ::= <letter_or_digit_or_underscore> <identifier_tail> | epsilon
+<letter_or_digit_or_underscore> ::= <letter> | <digit> | "_"
+<letter> ::= "a" | … | "z" | "A" | … | "Z"
+<digit> ::= "0" | … | "9"
+<number> ::= <digit> <number_tail>
+<number_tail> ::= <digit> <number_tail> | epsilon
