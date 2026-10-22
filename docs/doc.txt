@@ -1,0 +1,44 @@
+AquaLight - Lexical Analyzer (Documentation)
+
+1. Tools used
+- Python 3, with the "re" module (regular expressions) for the scanner.
+- tokens.txt: the list of tokens (reserved words, operators, separators).
+- Input: a source program (.aq file). Output: PIF, ST and lexical errors.
+
+2. Lexical tokens detection
+The scanner uses one regular expression, built from tokens.txt and from the
+rules below. The rules are tried in order and the first match wins.
+
+- Reserved words, operators, separators: taken from tokens.txt.
+  Examples: when, if, else, lamp, =, ==, <=, :, [ ]
+  A reserved word must not be followed by a letter, digit or "_", so
+  "readings" is an identifier and not "read" + "ings".
+- Identifiers: [A-Za-z][A-Za-z0-9_]*
+  They start with a letter. Examples: level, lux, outside_light
+- Constants: [0-9]+
+  Integer numbers. Examples: 0, 800
+- Lexical errors: an identifier that starts with a digit (2abc) or any
+  character that is not part of the language (@, #, a single !). The error
+  is reported with line and column, and the scanning continues.
+- Spaces, tabs and new lines are ignored.
+
+Identifiers and constants are stored in the symbol table (ST). The PIF
+contains all the tokens in the order they appear in the program: reserved
+words, operators and separators as they are, and "id" or "const" together
+with the ST position for identifiers and constants.
+
+3. Data structure for the ST
+The ST is a hash table with separate chaining, implemented in Python
+(symbol_table.py).
+- It has 31 buckets, and each bucket is a linked list of nodes.
+- The bucket of a symbol is its djb2 hash modulo 31. Symbols with the same
+  bucket (collisions) are added at the end of the list.
+- The position of a symbol is the pair (bucket, index in the list).
+- Each identifier or constant is stored only once.
+
+4. Operations for ST management
+- insert(key): adds the key if it is not in the table and returns its
+  position; if it already exists, returns the existing position.
+- lookup(key): returns the position of the key, or None if it is not found.
+- len(): number of entries.
+- items(): goes through the table, bucket by bucket (used to print the ST).

@@ -1,0 +1,34 @@
+# AquaLight tokens: reserved words, operators and separators (one per line).
+# Identifiers and constants are detected with regular expressions (see lexer.py).
+when
+as
+emit
+if
+else
+for
+in
+read
+show
+lamp
+brightness
+color
+and
+or
+end
++
+-
+*
+/
+=
+==
+!=
+<
+>
+<=
+>=
+:
+,
+[
+]
+(
+)

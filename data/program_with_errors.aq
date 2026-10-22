@@ -1,0 +1,7 @@
+level = 0
+2abc = 5
+read light
+lamp brightness level @ 2
+show light != 3
+x = a ! b
+lamp color #ff

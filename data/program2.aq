@@ -1,0 +1,34 @@
+readings = [0, 0, 0]
+total = 0
+avg = 0
+
+when outside_light as lux:
+    if lux < 800:
+        lamp brightness 100 - lux / 10
+    else:
+        lamp brightness 10
+    end
+    show lux
+end
+
+when hour_changed as h:
+    if h >= 7 and h < 18:
+        lamp color 6500
+    else:
+        lamp color 2700
+    end
+end
+
+read hour
+read readings[0]
+read readings[1]
+read readings[2]
+
+for r in readings:
+    total = total + r
+end
+
+avg = total / 3
+show avg
+emit outside_light avg
+emit hour_changed hour

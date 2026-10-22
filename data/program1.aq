@@ -1,0 +1,14 @@
+level = 0
+
+when outside_light as lux:
+    if lux < 800:
+        level = 100 - lux / 10
+    else:
+        level = 10
+    end
+    lamp brightness level
+    show level
+end
+
+read light
+emit outside_light light
